@@ -3,6 +3,6 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Categories {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column({ unique: true })
   Category_Name: string;
 }

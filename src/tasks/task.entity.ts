@@ -4,7 +4,7 @@ import {
   Column,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -20,10 +20,10 @@ export class Tasks {
   createdoN: string;
   @Column({ type: 'date', default: null })
   deadline: Date;
-  @OneToOne(() => usersTable)
+  @ManyToOne(() => usersTable)
   @JoinColumn()
   user: usersTable;
-  @OneToOne(() => Categories)
+  @ManyToOne(() => Categories)
   @JoinColumn()
-  Category: Categories;
+  category: Categories;
 }
