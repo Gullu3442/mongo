@@ -1,4 +1,12 @@
-import { Get, Injectable, Controller, Post, Body } from '@nestjs/common';
+import {
+  Get,
+  Injectable,
+  Controller,
+  Post,
+  Body,
+  Put,
+  Param,
+} from '@nestjs/common';
 import { UsersService } from './users.services';
 
 @Controller('users')
@@ -12,5 +20,10 @@ export class UserController {
   @Get()
   getUser() {
     return this.userService.getUser();
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() body) {
+    return this.userService.updateUser({ id, body });
   }
 }

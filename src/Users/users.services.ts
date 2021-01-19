@@ -24,4 +24,8 @@ export class UsersService {
   getUser() {
     return this.userRepo.find();
   }
+
+  updateUser({ id, body }) {
+    return this.userRepo.update(id, body);
+  }
 }
