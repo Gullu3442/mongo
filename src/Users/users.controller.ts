@@ -12,18 +12,19 @@ import { UsersService } from './users.services';
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UsersService) {}
+
   @Post()
   createUser(@Body() body) {
-    return this.userService.CreateUser(body);
+    return this.userService.createUser(body);
   }
 
   @Get()
-  getUser() {
-    return this.userService.getUser();
+  async getuser() {
+    return await this.userService.getUser();
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() body) {
-    return this.userService.updateUser({ id, body });
+  @Put('/:User_Name')
+  update(@Param('User_Name') uName: string, @Body() body) {
+    return this.userService.updateUser({ uName, body });
   }
 }

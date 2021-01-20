@@ -1,31 +1,25 @@
-import { Injectable, Post } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+
+import { Model } from 'mongoose';
 import { UsersDto } from './user.dto';
-import { usersTable } from './users.entity';
+import { UserDocument } from './user.schema';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(usersTable) private userRepo: Repository<usersTable>,
+    @InjectModel('User') private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async CreateUser(user: UsersDto) {
-    let user_exist = await this.userRepo.findOne({
-      where: { User_Name: user.User_Name },
-    });
-    if (user_exist) {
-      return { msg: 'User ALready Exists' };
-    } else {
-      return this.userRepo.save(user);
-    }
+  async createUser(user) {
+    const createdUser = new this.userModel(user);
+    return await createdUser.save();
   }
 
-  getUser() {
-    return this.userRepo.find();
+  async getUser() {
+    return await this.userModel.find().exec();
   }
-
-  updateUser({ id, body }) {
-    return this.userRepo.update(id, body);
+  async updateUser({ uName, body }) {
+    return await this.userModel.updateOne({ User_Name: uName }, body);
   }
 }
